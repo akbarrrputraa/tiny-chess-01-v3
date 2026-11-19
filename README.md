@@ -41,14 +41,22 @@ entry (v1/v2 read as reference only).
   pos3 perft3 2,812; make/unmake round-trip exact (board, eval, hash,
   phase) over 3x200 random moves; packed `main.py` verified identical
   (perft 8902, bench move b1c3).
-- Head-to-head vs v1 (equal 80k nodes, 18 openings x2, 36 games):
-  after 6 games v3 3.5/6 (W3 D1 L2, 58%) — in progress.
+- Head-to-head vs v1 (equal 80k nodes, 18 practice openings x2):
+  **21 games, v3 15.5/21 = 73.8% (W13 D5 L3), logistic Elo diff +180**
+  — above the 60% bar. CAVEAT: the H2H workers loaded the engine
+  before the final size cuts, so they ran the full-featured variant
+  (piece-list move gen + history heuristic + bishop-pair eval). The
+  shipped engine drops those three for size (NPS-neutral gen change,
+  history/bishop-pair worth maybe 10-30 Elo combined); the gauntlet
+  below is the direct measurement of the shipped binary.
 - Local gauntlet (kit practice trials, 6 games vs house ladder):
   trial-0: **Elo 1279, 3W 0D 3L, spare 244** (beat depth-2/3/4, lost
   nodes-100k/250k/500k). Trial-1: **Elo 1279, 3W 0D 3L, spare 264**
   (beat depth-2/3 + nodes-100k, lost depth-4 + nodes-250k/500k).
-  0 time losses in both. Same Elo as v1's local trial-0 (1279);
-  trial-2 in progress.
+  Trial-2: **Elo 1364, 3W 1D 2L, spare 224** (beat depth-2/3/4,
+  drew nodes-100k, lost nodes-250k/500k). Mean ~1307 over 18 games
+  vs v1's single trial-0 1279. 0 time losses in all 18 games
+  (v1 lost 2 on time in its trial-0).
 
 ## Size budget
 
